@@ -10,7 +10,7 @@ void process_packet();
  * type safety
  */
 
-void dispatch(int code)
+void dispatch(int code) // Safe version 1  
 {
 	void (*local_handler)(void) == NULL;
 	if (code == 1)
@@ -29,6 +29,21 @@ void dispatch(int code)
 	if (local_handler)
 	{
 		local_handler(); // Safe: local variable
+	}
+}
+
+void dispatch(int code) // Safe version 2
+{
+	switch(code)
+	{
+		case 1:
+			authenticate();
+			break;
+		case 2:
+			process_packet();
+			break;
+		default:
+			printf("Invalid dispatch code);
 	}
 }
 
