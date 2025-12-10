@@ -13,3 +13,6 @@ void run(void (*fp)())
 {
 	fp();
 }
+
+// Code is actually safe but function pointer can point to unsafe() through
+// buffer overflow.
