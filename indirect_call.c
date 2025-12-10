@@ -5,16 +5,30 @@
 
 void authenticate();
 void process_packet();
-void (*handler)();
+/* Not type safe. Takes an unspecified no. of arguments. void (*handler)();
+ * So this global variable will be rewritten to a local variable with 
+ * type safety
+ */
 
 void dispatch(int code)
 {
+	void (*local_handler)(void) == NULL;
 	if (code == 1)
 	{
-		handler = authenticate;
+		local_handler = authenticate;
+	}
+	else if (code == 2)
+	{
+		local_handler = process_packet;
+	}
 	else
-		handler = process_packet;
+	{
+		return;
 	}
 
-	handler();
+	if (local_handler)
+	{
+		local_handler(); // Safe: local variable
+	}
 }
+
